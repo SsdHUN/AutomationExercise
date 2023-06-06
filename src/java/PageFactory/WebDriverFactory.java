@@ -9,11 +9,15 @@ public class WebDriverFactory {
     public static WebDriver createWebDriver(String browserName){
         if (webDriver == null){
             switch (browserName){
-                case "Frirefox" -> webDriver = new FirefoxDriver();
-                case  "Chrome" -> {
+                case "Firefox" : {
+                    webDriver = new FirefoxDriver();
+                    break;
+                }
+                case  "Chrome" : {
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--remote-allow-origins=*");
                     webDriver = new ChromeDriver(chromeOptions);
+                    break;
                 }
             }
         }
