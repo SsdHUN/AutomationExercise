@@ -1,11 +1,12 @@
 package PageFactory;
 
-import org.checkerframework.checker.units.qual.C;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import static Util.Util.*;
 
 public class RegisterPage extends BasePage {
 
@@ -26,18 +27,18 @@ public class RegisterPage extends BasePage {
     WebElement birthMonth;
     @FindBy(xpath = "//select[@data-qa='years']")
     WebElement birthYear;
-    @FindBy(xpath = "//input[id='newsletter']")
+    @FindBy(xpath = "//input[@id='newsletter']")
     WebElement newsletterChackbox;
-    @FindBy(xpath = "//input[id='optin']")
+    @FindBy(xpath = "//input[@id='optin']")
     WebElement Receivechackbox;
     @FindBy(xpath = "//input[@data-qa='first_name']")
     WebElement firstName;
     @FindBy(xpath = "//input[@data-qa='last_name']")
     WebElement lastName;
-    @FindBy(xpath = "//input[@data-qa='addres']")
+    @FindBy(xpath = "//input[@data-qa='address']")
     WebElement address;
-    @FindBy(xpath = "//input[@data-qa='county']")
-    WebElement county;
+    @FindBy(xpath = "//select[@data-qa='country']")
+    WebElement country;
     @FindBy(xpath = "//input[@data-qa='state']")
     WebElement state;
     @FindBy(xpath = "//input[@data-qa='city']")
@@ -47,9 +48,25 @@ public class RegisterPage extends BasePage {
     @FindBy(xpath = "//input[@data-qa='mobile_number']")
     WebElement mobileNumber;
     @FindBy(xpath = "//button[@data-qa='create-account']")
-    WebElement createAccuntBtn;
+    WebElement createAccountBtn;
+    @FindBy(xpath = "//b[contains(text(),'Account Created!')]")
+    WebElement accuntCreated;
+    @FindBy(xpath = "//a[@data-qa='continue-button']")
+    WebElement continueBtn;
+    @FindBy(xpath = "//a[@href='/delete_account']")
+    WebElement deleteAccount;
+    @FindBy(xpath = "//b[contains(text(),'Account Deleted!')]")
+    WebElement accountDelete;
 
 
+    public boolean checkLoggedUserName(String name){
+        //hideElements();
+        WebElement searchName = driver.findElement(By.xpath("//*[contains(text(),'" + name +"')]"));
+        if (searchName != null){
+            return true;
+        }
+        return false;
+    }
     public void clickTitle(String title){
         if (title == "Mr"){
             titleMr.click();
@@ -66,9 +83,12 @@ public class RegisterPage extends BasePage {
         birthYear.sendKeys(year);
     }
     public  void clickNewsletterChackbox(){
+        wait.until(ExpectedConditions.elementToBeClickable(newsletterChackbox));
         newsletterChackbox.click();
     }
     public void clickReceivechackbox(){
+
+        wait.until(ExpectedConditions.elementToBeClickable(Receivechackbox));
         Receivechackbox.click();
     }
     public void fillFirstAndLastName(String fName, String lName){
@@ -78,8 +98,8 @@ public class RegisterPage extends BasePage {
     public void fillAddres(String Address){
         address.sendKeys(Address);
     }
-    public  void fillCounty(String County){
-        county.sendKeys(County);
+    public void selectCountry(String County){
+        country.sendKeys(County);
     }
     public  void fillState(String State){
         state.sendKeys(State);
@@ -93,8 +113,48 @@ public class RegisterPage extends BasePage {
     public  void fillMobileNumber(String MobileNumber){
         mobileNumber.sendKeys(MobileNumber);
     }
-    public void clickCreateAccuntBtn(){
-        createAccuntBtn.click();
+    public void clickCreateAccuntBtn() {
+        createAccountBtn.click();
+    }
+    public void clickDeleteAccount(){
+        deleteAccount.click();
+    }
+    public void clickContinueBtn(){
+        //wait.until(ExpectedConditions.elementToBeClickable(continueBtn));
+        continueBtn.click();
+    }
+    public void waitToPresentCreateAccount(){
+        wait.until(ExpectedConditions.visibilityOf(accuntCreated));
+    }
+    public void waitToPresentDeleteAccount(){
+        wait.until(ExpectedConditions.visibilityOf(accountDelete));
+    }
+
+    public void fillRegisterForm(){
+        hideElements();
+        clickTitle(TITLE);
+        fillPassword(PASSWORD);
+        fillBirthDate(BIRTH_DAY,BIRTH_MONTH,BIRTH_YEAR);
+        clickNewsletterChackbox();
+        clickReceivechackbox();
+        fillFirstAndLastName(FIRST_NAME,LAST_NAME);
+        fillAddres(ADDRESS);
+        selectCountry(COUNTRY);
+        fillState(STATE);
+        fillCity(CITY);
+        fillZipcode(ZIPCODE);
+        fillMobileNumber(MOBILE_NUMBER);
+        clickCreateAccuntBtn();
+    }
+    public void verifyCreateAccount(){ //better name
+        hideElements();
+        waitToPresentCreateAccount();
+        clickContinueBtn();
+    }
+    public void verifyDeleteAccount(){ //better name
+        hideElements();
+        waitToPresentDeleteAccount();
+        clickContinueBtn();
     }
 
 }

@@ -32,10 +32,6 @@ public class LoginPage extends BasePage {
     public void waitToPresentSingupText(){
         wait.until(ExpectedConditions.visibilityOf(singupText));
     }
-    public void navigateToHomePage(){
-
-        driver.get(BASE_URL);
-    }
     public void fillSingUpName(String name){
         singUoName.sendKeys(name);
     }
@@ -45,11 +41,17 @@ public class LoginPage extends BasePage {
     public void clickSingUpBtn(){
         singUpBtn.click();
     }
-
+    public void navigateToHomePage(){
+        driver.get(BASE_URL);
+    }
     public void navigateToLoginPage(){
         driver.get(BASE_URL+"/login");
     }
-    public void urlprint(){
-        System.out.println(Util.BASE_URL);
+
+    public void fillSingupForm(){
+        fillSingUpName(REGISTER_NAME);
+        fillSingUpEmail(REGISTER_EMAIL);
+        clickSingUpBtn();
+
     }
 }
