@@ -117,10 +117,11 @@ public class RegisterPage extends BasePage {
         createAccountBtn.click();
     }
     public void clickDeleteAccount(){
+        wait.until(ExpectedConditions.elementToBeClickable(deleteAccount));
         deleteAccount.click();
     }
     public void clickContinueBtn(){
-        //wait.until(ExpectedConditions.elementToBeClickable(continueBtn));
+        wait.until(ExpectedConditions.elementToBeClickable(continueBtn));
         continueBtn.click();
     }
     public void waitToPresentCreateAccount(){

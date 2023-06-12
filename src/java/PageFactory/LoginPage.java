@@ -1,7 +1,5 @@
 package PageFactory;
 
-
-import Util.Util;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
