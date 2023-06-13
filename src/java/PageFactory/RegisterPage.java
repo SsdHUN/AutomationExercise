@@ -59,14 +59,6 @@ public class RegisterPage extends BasePage {
     WebElement accountDelete;
 
 
-    public boolean checkLoggedUserName(String name){
-        //hideElements();
-        WebElement searchName = driver.findElement(By.xpath("//*[contains(text(),'" + name +"')]"));
-        if (searchName != null){
-            return true;
-        }
-        return false;
-    }
     public void clickTitle(String title){
         if (title == "Mr"){
             titleMr.click();
